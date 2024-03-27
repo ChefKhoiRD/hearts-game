@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {TPlayerOptions} from '../../../../server/src/entities/Player';
+import {TPlayerOptions} from '../../../../../server/src/entities/Player';
 import './styles/Player.css';
 
 export function Player({avatarUri, name, talking}: TPlayerOptions) {

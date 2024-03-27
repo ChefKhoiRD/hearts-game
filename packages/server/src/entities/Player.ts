@@ -21,8 +21,8 @@ export class Player extends Schema {
   @type('boolean')
   public talking: boolean = false;
 
-  @type(['string'])
-  public hand = new ArraySchema<string>();
+  @type([ 'string' ])
+  public hand: ArraySchema<string> = new ArraySchema<string>();
 
   @type('boolean')
   public isStanding = false;

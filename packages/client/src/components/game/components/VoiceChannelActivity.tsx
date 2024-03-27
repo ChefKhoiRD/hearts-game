@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Player} from './Player';
-import {usePlayers} from '../../hooks/usePlayers';
+import {usePlayers} from '../../../hooks/usePlayers';
 import './styles/VoiceChannelActivity.css';
 
 export function VoiceChannelActivity() {

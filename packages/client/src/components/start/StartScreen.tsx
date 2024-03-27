@@ -1,6 +1,6 @@
 import {AuthenticatedContextProvider} from '../../hooks/useAuthenticatedContext';
 import { PlayersContextProvider } from '../../hooks/usePlayers';
-import { VoiceChannelActivity } from '../game/VoiceChannelActivity';
+import { VoiceChannelActivity } from '../game/components/VoiceChannelActivity';
 
 import './styles/StartScreen.css';
 
