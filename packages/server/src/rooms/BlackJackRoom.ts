@@ -1,7 +1,8 @@
-import { Room, Client} from 'colyseus';
-import { ArraySchema, MapSchema } from '@colyseus/schema';
+import { Room, Client } from 'colyseus';
 import { BlackjackState } from '../entities/BlackJackState';
 import { Player } from '../entities/Player';
+import { ArraySchema } from '@colyseus/schema';
+import { StateHandlerRoom } from './StateHandlerRoom';
 
 export class BlackjackRoom extends Room<BlackjackState> {
     static MAX_PLAYERS = 4;
@@ -11,19 +12,36 @@ export class BlackjackRoom extends Room<BlackjackState> {
 
     constructor() {
         super();
-        this.state = new BlackjackState();
     }
 
     onCreate(options: any): void {
         this.setState(new BlackjackState()); // Ensure proper initialization of the state
     }
 
-    onJoin(client: Client): void {
-        if (this.state && this.state.players && this.clients.length <= BlackjackRoom.MAX_PLAYERS) {
-            const newPlayer = new Player();
-            this.state.players.set(client.sessionId, newPlayer);
-        } else {
-            client.send('room-full');
+    onJoin(client: Client, options: any): void {
+        try {
+            if (this.clients.length <= BlackjackRoom.MAX_PLAYERS) { // Check if maximum players limit is not reached
+                // Create a new player with a unique name
+                const newPlayer = new Player(options);
+                newPlayer.name = `Player ${this.clients.length + 1}`;
+                
+                // Add the new player to the appropriate room's state
+                this.state.players.set(client.sessionId, newPlayer);
+                
+                // Log updated player list
+                console.log("Updated player list:", this.state.players);
+                
+                // Broadcast the updated game state to all clients
+                this.broadcastGameUpdate();
+            } else {
+                // Room is full, notify the client
+                client.send('room-full');
+                console.log("Room is full. Cannot join.");
+            }
+        } catch (error) {
+            // Handle any errors that occur during player join
+            console.error('Error in onJoin:', error);
+            client.send('join-error'); // Notify the client of the error
         }
     }
 
@@ -86,5 +104,4 @@ export class BlackjackRoom extends Room<BlackjackState> {
             this.broadcastGameUpdate(); // Broadcast the updated game state
         }
     }
-
 }

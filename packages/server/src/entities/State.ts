@@ -30,9 +30,14 @@ export class State extends Schema {
   }
 
   createPlayer(sessionId: string, playerOptions: TPlayerOptions) {
-    const existingPlayer = Array.from(this.players.values()).find((p) => p.sessionId === sessionId);
-    if (existingPlayer == null) {
-      this.players.set(playerOptions.userId, new Player({...playerOptions, sessionId}));
+    if (playerOptions.userId !== undefined) {
+      const existingPlayer = Array.from(this.players.values()).find((p) => p.sessionId === sessionId);
+      if (existingPlayer == null) {
+        this.players.set(playerOptions.userId, new Player({...playerOptions, sessionId}));
+      }
+    } else {
+      // Handle the case where userId is undefined
+      console.error('Error: userId is undefined in playerOptions');
     }
   }
 
