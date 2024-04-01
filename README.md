@@ -1,6 +1,23 @@
-# React Colyseus Example
+# Hearts Game
 
-![Screenshot of the react colyseus example running](/assets/example-application.gif)
+Rather than players against house, the game is flipped to player vs player and the dealer becomes neutral. Players bet (2?) gold per round and are dealt 2 cards. Each player’s first card is dealt as an upcard and all other cards are dealt face-down. The goal is to get closer to 21 than your opponents and win the round. If players push (ex: 2 or more players hit the same number), the gold will be split between them.
+
+The dealer (bot) does not deal themselves a hand, but rather, offers players power ups, for example, shields, gold, etc. Additionally the dealer acts as a shop and occasionally offers players lower-level power ups at a cost.
+
+The rules are to be ironed out when the time comes, my initial plan for the game is to create a standard game of Blackjack that is playable within Discord Activies. My twist to make the game different will come later.
+
+## Discord App Pitches 2024
+
+This is my submission to [Discord App Pitch 2024](https://discord.com/build/app-pitches-2024). 
+
+### Implications
+1. Submissions due April 1st.
+2. A prototype must be submitted. (There has to be some level of development)
+3. Must be played within Discord Activities. 
+4. Multiplayer scope is limited to players within a voice call.
+
+
+## Technical Details
 
 This repo is an example built on top of two javascript frameworks
 
@@ -47,189 +64,4 @@ To run your app locally, run the following from this directory (/examples/react-
 pnpm install # only need to run this the first time
 pnpm dev
 pnpm tunnel # from another terminal
-```
-
-Be sure to complete all the steps listed [here](https://discord.com/developers/docs/activities/building-an-activity) to ensure your development setup is working as expected.
-
-## Where do you go from here?
-
-This basic example will render users' avatars and show a green circle around anyone who is talking. It will spin up one "room" per Discord voice channel. It's a great starting point for your app, whether you're planning to stay in "react-land" or planning to use Unity / Cocos / etc...
-
-For more resources on 3rd party Game Engine SDKs for colyseus go [here](https://github.com/colyseus/colyseus#%EF%B8%8F-official-client-integration)
-
-## Common patterns with Colyseus
-
-### Expanding state
-
-Let's say you wanted to add position (x, y) to each player, and allow them to move. This requires changes across the front-end and back-end. Here's an example of how to do that:
-
-- Extend `Player.ts`' schema to include x and y as numbers
-
-```diff
---- a/examples/react-colyseus/packages/server/src/entities/Player.ts
-+++ b/examples/react-colyseus/packages/server/src/entities/Player.ts
-@@ -1,6 +1,6 @@
- import {Schema, type} from '@colyseus/schema';
-
--export type TPlayerOptions = Pick<Player, 'sessionId' | 'userId' | 'name' | 'avatarUri' | 'talking'>;
-+export type TPlayerOptions = Pick<Player, 'sessionId' | 'userId' | 'name' | 'avatarUri' | 'talking' | 'x' | 'y'>;
-
- export class Player extends Schema {
-   @type('string')
-@@ -18,6 +18,12 @@ export class Player extends Schema {
-   @type('boolean')
-   public talking: boolean = false;
-
-+  @type('number')
-+  public x: number;
-+
-+  @type('number')
-+  public y: number;
-+
-   // Init
-   constructor({name, userId, avatarUri, sessionId}: TPlayerOptions) {
-     super();
-@@ -25,5 +31,7 @@ export class Player extends Schema {
-     this.avatarUri = avatarUri;
-     this.name = name;
-     this.sessionId = sessionId;
-+    this.x = Math.round(Math.random() * 1000);
-+    this.y = Math.round(Math.random() * 1000);
-   }
- }
-```
-
-- Add a keyboard event listener which will send "move" commands to the server when arrow keys are pressed
-
-```diff
---- a/examples/react-colyseus/packages/client/src/components/VoiceChannelActivity.tsx
-+++ b/examples/react-colyseus/packages/client/src/components/VoiceChannelActivity.tsx
-@@ -2,9 +2,41 @@ import * as React from 'react';
- import {Player} from './Player';
- import {usePlayers} from '../hooks/usePlayers';
- import './VoiceChannelActivity.css';
-+import {useAuthenticatedContext} from '../hooks/useAuthenticatedContext';
-
- export function VoiceChannelActivity() {
-   const players = usePlayers();
-+  const {room} = useAuthenticatedContext();
-+
-+  React.useEffect(() => {
-+    function handleKeyDown(ev: KeyboardEvent) {
-+      switch (ev.key) {
-+        case 'ArrowUp':
-+        case 'KeyW':
-+          room.send('move', {x: 0, y: 1});
-+          break;
-+        case 'ArrowDown':
-+        case 'KeyS':
-+          room.send('move', {x: 0, y: -1});
-+          break;
-+        case 'ArrowLeft':
-+        case 'KeyA':
-+          room.send('move', {x: -1, y: 0});
-+          break;
-+        case 'ArrowRight':
-+        case 'KeyD':
-+          room.send('move', {x: 1, y: 0});
-+          break;
-+        default:
-+          break;
-+      }
-+    }
-+
-+    document.addEventListener('keydown', handleKeyDown);
-+    return () => {
-+      document.removeEventListener('keydown', handleKeyDown);
-+    };
-+  }, [room]);
-
-   return (
-     <div className="voice__channel__container">
-```
-
-- Create an event listener on `StateHandlerRoom.ts` to handle "move" events coming from clients
-
-```diff
---- a/examples/react-colyseus/packages/server/src/rooms/StateHandlerRoom.ts
-+++ b/examples/react-colyseus/packages/server/src/rooms/StateHandlerRoom.ts
-@@ -16,6 +16,10 @@ export class StateHandlerRoom extends Room<State> {
-     this.onMessage('stopTalking', (client, _data) => {
-       this.state.stopTalking(client.sessionId);
-     });
-+
-+    this.onMessage('move', (client, data) => {
-+      this.state.movePlayer(client.sessionId, data);
-+    });
-   }
-
-   onAuth(_client: any, _options: any, _req: any) {
-```
-
-- Create a command to allow moving a player in `State.ts`
-
-```diff
---- a/examples/react-colyseus/packages/server/src/entities/State.ts
-+++ b/examples/react-colyseus/packages/server/src/entities/State.ts
-@@ -56,4 +56,15 @@ export class State extends Schema {
-       player.talking = false;
-     }
-   }
-+
-+  movePlayer(sessionId: string, movement: {x: number; y: number}) {
-+    const player = this._getPlayer(sessionId);
-+    if (player != null) {
-+      if (movement.x) {
-+        player.x += movement.x;
-+      } else if (movement.y) {
-+        player.y += movement.y;
-+      }
-+    }
-+  }
- }
-```
-
-- Update the UI to consume the stateful updates to each player
-
-```diff
---- a/examples/react-colyseus/packages/client/src/components/Player.tsx
-+++ b/examples/react-colyseus/packages/client/src/components/Player.tsx
-@@ -2,13 +2,15 @@ import * as React from 'react';
- import {TPlayerOptions} from 'server/src/entities/Player';
- import './Player.css';
-
--export function Player({avatarUri, name, talking}: TPlayerOptions) {
-+export function Player({avatarUri, name, talking, x, y}: TPlayerOptions) {
-   return (
-     <div className="player__container">
-       <div className={`player__avatar ${talking ? 'player__avatar__talking' : ''}`}>
-         <img className="player__avatar__img" src={avatarUri} width="100%" height="100%" />
-       </div>
--      <div>{name}</div>
-+      <div>
-+        {x}, {y}, {name}
-+      </div>
-     </div>
-   );
- }
-```
-
-### Adding a new environment variable
-
-In order to add new environment variables, you will need to do the following:
-
-1. Add the environment key and value to `.env`
-2. Add the key to [/examples/react-colyseus/packages/client/src/vite-env.d.ts](/examples/react-colyseus/packages/client/src/vite-env.d.ts)
-3. Add the key to [/examples/react-colyseus/packages/server/environment.d.ts](/examples/react-colyseus/packages/server/environment.d.ts)
-
-This will ensure that you have type safety in your client and server code when consuming environment variables
-
-Per the [ViteJS docs](https://vitejs.dev/guide/env-and-mode.html#env-files)
-
-> To prevent accidentally leaking env variables to the client, only variables prefixed with VITE\_ are exposed to your Vite-processed code.
-
-```env
-# Example .env file
-VITE_CLIENT_ID=123456789012345678
-CLIENT_SECRET=abcdefghijklmnopqrstuvwxyzabcdef
 ```
