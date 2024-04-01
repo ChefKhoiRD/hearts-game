@@ -8,14 +8,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@discord/embedded-app-sdk": "^1.0.2",
+    "@discord/embedded-app-sdk": "workspace:@discord/embedded-app-sdk@*",
     "colyseus.js": "^0.14.13",
     "eslint": "^8.18.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "type-fest": "^4.8.3",
-    "ws": "^8.16.0"
+    "type-fest": "^4.8.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",

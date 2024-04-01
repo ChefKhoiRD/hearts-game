@@ -1,62 +1,32 @@
-import { Schema, ArraySchema, type } from '@colyseus/schema';
-import { v4 as uuidv4 } from 'uuid';
+import { Schema, type } from '@colyseus/schema';
+import { Hand } from './schemas/Hand';
+import gameConfig from '../game.config';
 
-// Define interface for player options
-export interface TPlayerOptions {
-  id?: string;
-  name?: string;
-  userId?: string;
-  avatarUri?: string;
-  sessionId?: string;
-  hand?: ArraySchema<string>;
-  isStanding?: boolean;
-}
+export type TPlayerOptions = Pick<Player, 'sessionId' | 'userId' | 'name' | 'avatarUri' | 'talking'>;
 
-// Define Player class
 export class Player extends Schema {
-  @type('string')
-  public id: string; // Player ID
+  @type('string') public sessionId: string;
+  @type('string') public userId: string;
+  @type('string') public avatarUri: string;
+  @type('string') public name: string;
+  @type('boolean') public talking: boolean = false;
 
-  @type('string')
-  public sessionId: string;
-
-  @type('string')
-  public userId: string;
-
-  @type('string')
-  public avatarUri: string;
-
-  @type('string')
-  public name: string; // Add the 'name' property
-
-  @type('boolean')
-  public talking: boolean = false;
-
-  @type([ 'string' ])
-  public hand: ArraySchema<string> = new ArraySchema<string>();
-
-  @type('boolean')
-  public isStanding = false;
+  // Blackjack-related properties
+  @type(Hand) hand = new Hand(); // Player's hand in blackjack
+  @type('number') money: number = gameConfig.initialPlayerMoney; // Player's money in blackjack
+  @type('number') bet: number = gameConfig.initialPlayerBet; // Player's bet in blackjack
+  @type('boolean') ready: boolean = false; // Player's readiness status in blackjack
+  @type('boolean') autoReady: boolean = false; // Player's auto-ready status in blackjack
+  @type('boolean') admin: boolean = false; // Player's admin status in blackjack
+  @type('string') roundOutcome: string = ''; // Outcome of the round for the player in blackjack
 
   // Init
-  constructor({ id, name, userId, avatarUri, sessionId, hand, isStanding }: Partial<TPlayerOptions> = {}) {
+  constructor({ name, userId, avatarUri, sessionId }: TPlayerOptions, isAdmin: boolean) {
     super();
-    // Initialize properties with provided values or default to empty strings
-    this.id = id || generatePlayerId(); // Generate unique player ID
-    this.userId = userId || '';
-    this.avatarUri = avatarUri || '';
-    this.name = name || '';
-    this.sessionId = sessionId || '';
-
-    // Initialize hand with an empty ArraySchema<string> if not provided
-    this.hand = hand || new ArraySchema<string>();
-
-    // Initialize isStanding with false if not provided
-    this.isStanding = isStanding !== undefined ? isStanding : false;
+    this.userId = userId;
+    this.avatarUri = avatarUri;
+    this.name = name;
+    this.sessionId = sessionId;
+    this.admin = isAdmin;
   }
-}
-
-// Function to generate a unique player ID
-function generatePlayerId(): string {
-  return uuidv4();
 }

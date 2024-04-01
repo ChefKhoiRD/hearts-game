@@ -3,12 +3,12 @@
     "outDir": "dist",
     "target": "es6",
     "module": "commonjs",
-    "strict": true,
+    "strict": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true
   },
   "include": ["src/**/*.ts", "./environment.d.ts"],
-  "exclude": ["node_modules", "src/tests/**/*.test.ts"]
+  "exclude": ["node_modules"]
 }

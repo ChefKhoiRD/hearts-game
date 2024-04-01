@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Events} from '@discord/embedded-app-sdk';
 import {Player as PlayerState} from '../../../server/src/entities/Player';
 
-import {useAuthenticatedContext} from './useAuthenticatedContext';
+import {useAuthenticatedContext} from '../hooks/useAuthenticatedContext';
 import {discordSdk} from '../discordSdk';
 
 const PlayersContext = React.createContext<PlayerState[]>([]);

@@ -1,10 +1,14 @@
 import * as React from 'react';
-import { StartScreen } from './components/start/StartScreen';
-import BlackjackGame from './components/game/gameScreen';
+import {AuthenticatedContextProvider} from './hooks/useAuthenticatedContext';
+import {PlayersContextProvider} from './hooks/usePlayers';
 
+import {VoiceChannelActivity} from './components/VoiceChannelActivity';
 export default function App() {
   return (
-    // <StartScreen />
-    <BlackjackGame />
+    <AuthenticatedContextProvider>
+      <PlayersContextProvider>
+        <VoiceChannelActivity />
+      </PlayersContextProvider>
+    </AuthenticatedContextProvider>
   );
 }

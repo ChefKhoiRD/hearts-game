@@ -5,7 +5,7 @@ import {State} from '../../../server/src/entities/State';
 import {GAME_NAME} from '../../../server/src/shared/Constants';
 
 import {discordSdk} from '../discordSdk';
-import {LoadingScreen} from '../components/load/LoadingScreen';
+import {LoadingScreen} from '../components/LoadingScreen';
 import {getUserAvatarUrl} from '../utils/getUserAvatarUrl';
 
 import type {IGuildsMembersRead, TAuthenticateResponse, TAuthenticatedContext} from '../types';
