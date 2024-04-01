@@ -1,26 +1,22 @@
 import { Schema, MapSchema, type } from '@colyseus/schema';
 import { TPlayerOptions, Player } from './Player';
-import { Hand } from './schemas/Hand';
 
 export interface IState {
   roomName: string;
   channelId: string;
 }
 
-export class GameState extends Schema {
-  @type({ map: Player }) players = new MapSchema<Player>();
+export class State extends Schema {
+  @type({ map: Player })
+  players = new MapSchema<Player>();
 
-  @type('string') public roomName: string;
-  @type('string') public channelId: string;
+  @type('string')
+  public roomName: string;
+
+  @type('string')
+  public channelId: string;
 
   serverAttribute = 'this attribute wont be sent to the client-side';
-
-  // Blackjack-related properties
-  @type(Hand) dealerHand = new Hand(); // Dealer's hand in blackjack
-  @type('string') roundState: 'idle' | 'dealing' | 'turns' | 'end' = 'idle'; // Current round state in blackjack
-  @type('string') currentTurnPlayerId: string; // ID of the player whose turn it is in blackjack
-  @type('uint64') currentTurnTimeoutTimestamp: number = 0; // Timestamp for the end of the current player's turn
-  @type('uint64') nextRoundStartTimestamp: number = 0; // Timestamp for the start of the next round in blackjack
 
   // Init
   constructor(attributes: IState) {
@@ -33,10 +29,10 @@ export class GameState extends Schema {
     return Array.from(this.players.values()).find((p) => p.sessionId === sessionId);
   }
 
-  createPlayer(sessionId: string, playerOptions: TPlayerOptions, isAdmin: boolean) {
+  createPlayer(sessionId: string, playerOptions: TPlayerOptions) {
     const existingPlayer = Array.from(this.players.values()).find((p) => p.sessionId === sessionId);
     if (existingPlayer == null) {
-      this.players.set(playerOptions.userId, new Player({ ...playerOptions, sessionId }, isAdmin));
+      this.players.set(playerOptions.userId, new Player({...playerOptions, sessionId}));
     }
   }
 
