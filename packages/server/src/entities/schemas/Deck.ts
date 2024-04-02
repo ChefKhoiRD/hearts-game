@@ -1,6 +1,6 @@
 import { Card } from './Card';
 import { CardValue } from './CardValue';
-import { availableSuits, availableValues } from './cardValues';
+import { availableSuits, availableValues } from './availableValues';
 
 export class Deck {
   cards: Card[];

@@ -30,30 +30,16 @@ export class State extends Schema {
   }
 
   createPlayer(sessionId: string, playerOptions: TPlayerOptions) {
-    const existingPlayer = Array.from(this.players.values()).find((p) => p.sessionId === sessionId);
+    const existingPlayer = this._getPlayer(sessionId);
     if (existingPlayer == null) {
       this.players.set(playerOptions.userId, new Player({...playerOptions, sessionId}));
     }
   }
 
   removePlayer(sessionId: string) {
-    const player = Array.from(this.players.values()).find((p) => p.sessionId === sessionId);
+    const player = this._getPlayer(sessionId);
     if (player != null) {
       this.players.delete(player.userId);
-    }
-  }
-
-  startTalking(sessionId: string) {
-    const player = this._getPlayer(sessionId);
-    if (player != null) {
-      player.talking = true;
-    }
-  }
-
-  stopTalking(sessionId: string) {
-    const player = this._getPlayer(sessionId);
-    if (player != null) {
-      player.talking = false;
     }
   }
 }

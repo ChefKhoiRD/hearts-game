@@ -10,7 +10,9 @@ export class Hand extends Schema {
   
     public addCard(visible?: boolean, value?: CardValue) {
         const card = new Card(visible);
-        card.value = value; // Set the value property
+        if (value) {
+            card.value = value; // Set the value property if provided
+        }
         this.cards.push(card);
         if (visible === false) this.clearScore();
         else this.calculateScore();
@@ -42,4 +44,4 @@ export class Hand extends Schema {
         this.isBlackjack = tmpScore === 21 && this.cards.length === 2;
         this.isBusted = tmpScore > 21;
       }
-  }
+}

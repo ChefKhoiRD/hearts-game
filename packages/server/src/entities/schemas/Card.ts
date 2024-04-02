@@ -1,6 +1,6 @@
 import { Schema, type, filter } from '@colyseus/schema';
 import { CardValue } from './CardValue';
-import { getRandomArrayItem, availableSuits, availableValues } from './cardValues';
+import { getRandomArrayItem, availableSuits, availableValues } from './availableValues';
 
 export class Card extends Schema {
     @type('boolean') visible: boolean;
