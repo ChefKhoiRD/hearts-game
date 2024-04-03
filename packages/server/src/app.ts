@@ -1,16 +1,15 @@
-import {MonitorOptions, monitor} from '@colyseus/monitor';
-import {Server} from 'colyseus';
+import { MonitorOptions, monitor } from '@colyseus/monitor';
+import { Server } from 'colyseus';
 import fetch from 'cross-fetch';
 import dotenv from 'dotenv';
-import express, {Application, Request, Response} from 'express';
-import {createServer} from 'http';
-import {WebSocketTransport} from '@colyseus/ws-transport';
+import express, { Application, Request, Response } from 'express';
+import { createServer } from 'http';
+import { WebSocketTransport } from '@colyseus/ws-transport';
 import path from 'path';
+import { BlackjackRoom } from './rooms/BlackjackRoom';
+import { GameState } from './entities/GameState';
 
-import {GAME_NAME} from './shared/Constants';
-import {StateHandlerRoom} from './rooms/StateHandlerRoom';
-
-dotenv.config({path: '../../.env'});
+dotenv.config({ path: '../../.env' });
 
 const app: Application = express();
 const router = express.Router();
@@ -22,12 +21,8 @@ const server = new Server({
   }),
 });
 
-// Game Rooms
-server
-  .define(GAME_NAME, StateHandlerRoom)
-  // filterBy allows us to call joinOrCreate and then hold one game per channel
-  // https://discuss.colyseus.io/topic/345/is-it-possible-to-run-joinorcreatebyid/3
-  .filterBy(['channelId']);
+// Define BlackjackRoom
+server.define('blackjack', BlackjackRoom);
 
 app.use(express.json());
 
@@ -54,11 +49,11 @@ router.post('/token', async (req: Request, res: Response) => {
     }),
   });
 
-  const {access_token} = (await response.json()) as {
+  const { access_token } = (await response.json()) as {
     access_token: string;
   };
 
-  res.send({access_token});
+  res.send({ access_token });
 });
 
 // Using a flat route in dev to match the vite server proxy config

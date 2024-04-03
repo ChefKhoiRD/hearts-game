@@ -1,26 +1,32 @@
 import { GameState } from "../GameState";
-import { Player } from "../Player";
-import { CardValue } from "./CardValue";
-import { Card } from "./Card";
+// Assuming CardValueEnum and Suit are exported from CardValue.ts or their respective files
+import { CardValueEnum, Suit } from "./CardValue";
 
 export class PlayerActionHandler {
     static hit(gameState: GameState, playerId: string) {
         // Logic for handling the "hit" action
-        const player = gameState.players[playerId];
-        const card = gameState.dealCard(); // Assume dealCard() deals a card from the deck
+        const player = gameState.players.get(playerId); // Assuming players is a Map
+        const card = gameState.dealCard(); // Adjusted to match the new dealCard method signature
+        
         if (player && card) {
-          // Set the value property of the card using CardValue class
-          const cardValue = new CardValue();
-          cardValue.suit = card.value?.suit; // Access the suit property through card.value
-          cardValue.value = card.value?.value; // Access the value property through card.value
-          card.value = cardValue;
-          player.hand.addCard(card); // Use addCard method to add the dealt card to the player's hand
+            player.hand.addCard(card); // Directly add the dealt card to the player's hand
+            console.log(`Player ${playerId} hits.`);
+            // Recalculate player's score or handle game state updates as needed here
+        } else {
+            console.error(`Player ${playerId} not found in the game state or failed to deal a card.`);
         }
     }
 
     static stand(gameState: GameState, playerId: string) {
         // Logic for handling the "stand" action
-        // Additional logic if necessary
+        const player = gameState.players.get(playerId); // Adjusted for Map access
+        
+        if (player) {
+            console.log(`Player ${playerId} stands.`);
+            // Perform any necessary actions when a player stands, e.g., change turn
+        } else {
+            console.error(`Player ${playerId} not found in the game state.`);
+        }
     }
 
     // Other player actions can be defined here...

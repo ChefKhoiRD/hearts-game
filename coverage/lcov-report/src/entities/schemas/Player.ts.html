@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/entities/Player.ts</title>
+    <title>Code coverage report for src/entities/schemas/Player.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/entities</a> Player.ts</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/entities/schemas</a> Player.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -30,16 +30,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>10/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -100,57 +100,57 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Schema, type } from '@colyseus/schema';
-import { Hand } from './schemas/Hand';
-import gameConfig from '../game.config';
+import { Hand } from './Hand';
+import gameConfig from '../../game.config';
 &nbsp;
 export type TPlayerOptions = Pick&lt;Player, 'sessionId' | 'userId' | 'name' | 'avatarUri'&gt;;
 &nbsp;
 export class Player extends Schema {
   @type('string') public sessionId: string;
   @type('string') public userId: string;
-  @type('string') public avatarUri: string;
+  @type('string') public avatarUri: string = ''; // Default empty string if not provided
   @type('string') public name: string;
 &nbsp;
   // Blackjack-related properties
-  @type(Hand) hand: Hand = new Hand(); // Ensure hand is properly initialized
+  @type(Hand) public hand: Hand = new Hand();
 &nbsp;
-  @type('number') money: number = gameConfig.initialPlayerMoney;
-  @type('number') bet: number = gameConfig.initialPlayerBet;
-  @type('boolean') ready: boolean = false;
-  @type('boolean') autoReady: boolean = false;
-  @type('string') roundOutcome: string = '';
+  @type('number') public money: number = gameConfig.initialPlayerMoney<span class="branch-0 cbranch-no" title="branch not covered" > ?? 1000;</span> // Providing a fallback value
+  @type('number') public bet: number = gameConfig.initialPlayerBet<span class="branch-0 cbranch-no" title="branch not covered" > ?? 0;</span> // Providing a fallback value
+  @type('boolean') public ready: boolean = false;
+  @type('boolean') public autoReady: boolean = false;
+  @type('string') public roundOutcome: string = '';
 &nbsp;
-  // Constructor
-  constructor({ name, userId, avatarUri, sessionId }: TPlayerOptions) {
+  constructor(options: TPlayerOptions) {
     super();
-    this.userId = userId;
-    this.avatarUri = avatarUri;
-    this.name = name;
-    this.sessionId = sessionId;
+    this.sessionId = options.sessionId;            
+    this.userId = options.userId;
+    this.name = options.name;
+    // Only set avatarUri if provided, otherwise, it remains the default empty string
+    if (options.avatarUri) this.avatarUri = options.avatarUri;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -160,16 +160,16 @@ export class Player extends Schema {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-03T05:18:22.523Z
+                at 2024-04-03T21:03:46.470Z
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="../../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
     </body>
 </html>
     

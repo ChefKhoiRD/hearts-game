@@ -1,5 +1,5 @@
 import { Schema, MapSchema, type } from '@colyseus/schema';
-import { TPlayerOptions, Player } from './Player';
+import { TPlayerOptions, Player } from './schemas/Player';
 
 export interface IState {
   roomName: string;

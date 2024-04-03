@@ -1,11 +1,11 @@
 import { MapSchema, Schema, type } from '@colyseus/schema';
 import { Hand } from './schemas/Hand';
-import { Player } from './Player';
+import { Player } from './schemas/Player';
 import { Card } from './schemas/Card';
 import { Deck } from './schemas/Deck';
 
 export class GameState extends Schema {
-  @type(Hand) dealerHand = new Hand();
+  @type(Hand) dealerHand: Hand = new Hand();
   @type({ map: Player }) players = new MapSchema<Player>();
   @type('string') roundState: 'idle' | 'dealing' | 'turns' | 'end' = 'idle';
   @type('string') currentTurnPlayerId: string = '';
@@ -18,81 +18,66 @@ export class GameState extends Schema {
     super();
     this.deck.initializeDeck();
     this.deck.shuffle();
-  };
+  }
 
-  // Get the size of the deck
   getDeckSize(): number {
     return this.deck.getDeckSize();
-  };
+  }
 
   dealCard(): Card | undefined {
-    return this.deck.dealCard();
-  };
+    return this.deck.dealCard(); // Assume dealCard now handles card visibility appropriately
+  }
 
   addPlayer(player: Player): void {
-    this.players[player.sessionId] = player;
+    console.log("Adding player:", player);
+    this.players.set(player.sessionId, player);
+    // Optionally, set the first player as the current turn player if not already set
     if (!this.currentTurnPlayerId) {
       this.currentTurnPlayerId = player.sessionId;
     }
-  };
+  }
 
   determineCurrentTurnPlayer(): Player | undefined {
-    // Check if there are any players in the game
-    if (Object.keys(this.players).length === 0) {
-      return undefined; // No players in the game
+    if (this.players.size === 0) {
+      return undefined;
     }
-  
-    // If there's no current turn player ID set, select the first player as the current turn player
-    if (!this.currentTurnPlayerId) {
-      return this.players['1']; // Assuming player IDs start from 1
-    }
-  
-    // Find the player with the current turn player ID
-    const currentPlayer = Object.values(this.players).find(player => player.sessionId === this.currentTurnPlayerId);
-    
-    return currentPlayer; // Return the player with the current turn player ID
-  };
-  
-  // Handle a player's action (e.g., hit or stand)
+    // Logic remains the same, efficiently determining the current turn player
+    const firstPlayerId = this.players.keys().next().value;
+    return this.players.get(this.currentTurnPlayerId) || this.players.get(firstPlayerId);
+  }
+
   handlePlayerAction(playerId: string, action: string) {
-    // Retrieve the player from the players map using the playerId
-    const player = this.players[playerId];
-    
-    // Check if the player exists
+    const player = this.players.get(playerId);
     if (!player) {
-        console.error(`Player with ID ${playerId} not found.`);
-        return;
+      console.error(`Player with ID ${playerId} not found.`);
+      return;
     }
 
-    // Handle different types of actions
     switch (action) {
-        case 'hit':
-            // Logic for when the player chooses to hit
-            // For example:
-            const card = this.dealCard(); // Deal a card from the deck
-            if (card) {
-                player.hand.addCard(card); // Add the dealt card to the player's hand
-            }
-            break;
-        case 'stand':
-            // Logic for when the player chooses to stand
-            // For example:
-            // Nothing needs to be done here since the player is standing
-            break;
-        // Add cases for other actions like doubling down, splitting, etc.
-        default:
-            console.error(`Invalid action: ${action}`);
-            break;
+      case 'hit':
+        const card = this.dealCard(); // Visibility handled elsewhere
+        if (card) player.hand.addCard(card);
+        break;
+      case 'stand':
+        // Stand logic here
+        break;
+      default:
+        console.error(`Invalid action: ${action}`);
     }
-  };
+  }
 
-  // Determine the outcome of the current round
   determineRoundOutcome() {
-    // Your logic to determine round outcome goes here
-  };
+    // This method might need adjustment based on how bets are handled
+    const player = this.players.get(this.currentTurnPlayerId);
+    if (!player) {
+      console.error("Current turn player not found.");
+      return;
+    }
+    // Implementing round outcome logic...
+  }
 
-  // Start the next round
-  startNextRound() {
-    // Your logic to start the next round goes here
-  };
+  resetHands() {
+    this.dealerHand.clear();
+    this.players.forEach(player => player.hand.clear());
+  }
 }

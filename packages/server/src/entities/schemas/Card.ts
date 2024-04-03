@@ -1,6 +1,5 @@
 import { Schema, type, filter } from '@colyseus/schema';
-import { CardValue } from './CardValue';
-import { getRandomArrayItem, availableSuits, availableValues } from './availableValues';
+import { CardValue, Suit, CardValueEnum } from './CardValue'; // Adjust import to include Suit and CardValueEnum
 
 export class Card extends Schema {
     @type('boolean') visible: boolean;
@@ -8,16 +7,12 @@ export class Card extends Schema {
     @filter(function (this: Card) {
       return this.visible;
     })
-    @type(CardValue) value?: CardValue; // Make value optional
+    @type(CardValue) value?: CardValue; // Keep value optional based on your design, though it seems it should always be set based on the constructor
 
-    constructor(visible = true) {
+    constructor(suit: Suit, cardValue: CardValueEnum, visible: boolean = true) {
       super();
-
       this.visible = visible;
-
-      // Initialize value with default CardValue
-      this.value = new CardValue();
-      this.value.suit = getRandomArrayItem(availableSuits);
-      this.value.value = getRandomArrayItem(availableValues);
+      // Directly use the passed suit and cardValue to create a CardValue instance
+      this.value = new CardValue(suit, cardValue);
     }
 }

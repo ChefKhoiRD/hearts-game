@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.85% </span>
+                <span class="strong">63.63% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>26/28</span>
+                <span class='fraction'>21/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.85% </span>
+                <span class="strong">63.63% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/28</span>
+                <span class='fraction'>21/33</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -91,23 +91,12 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -115,34 +104,60 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { GameState } from "../GameState";
-import { Player } from "../Player";
-import { CardValue } from "./CardValue";
-import { Card } from "./Card";
+// Assuming CardValueEnum and Suit are exported from CardValue.ts or their respective files
+import { CardValueEnum, Suit } from "./CardValue";
 &nbsp;
 export class PlayerActionHandler<span class="fstat-no" title="function not covered" > {</span>
-    static hit(gameState: GameState, playerId: string) {
-        // Logic for handling the "hit" action
-        const player = gameState.players[playerId];
-        const card = gameState.dealCard(); // Assume dealCard() deals a card from the deck
-        if (player &amp;&amp; card) {
-          // Set the value property of the card using CardValue class
-          const cardValue = new CardValue();
-          cardValue.suit = card.value<span class="branch-0 cbranch-no" title="branch not covered" >?.s</span>uit; // Access the suit property through card.value
-          cardValue.value = card.value<span class="branch-0 cbranch-no" title="branch not covered" >?.v</span>alue; // Access the value property through card.value
-          card.value = cardValue;
-          player.hand.addCard(card); // Use addCard method to add the dealt card to the player's hand
-        }
-        // Additional logic if necessary
-    }
+<span class="fstat-no" title="function not covered" >    static hit(gameState: GameState, playerId: string) {</span>
+<span class="cstat-no" title="statement not covered" >        // Logic for handling the "hit" action</span>
+<span class="cstat-no" title="statement not covered" >        const player = gameState.players.get(playerId); // Assuming players is a Map</span>
+<span class="cstat-no" title="statement not covered" >        const card = gameState.dealCard(false); // Adjusted to match the new dealCard method signature</span>
+<span class="cstat-no" title="statement not covered" >        </span>
+<span class="cstat-no" title="statement not covered" >        if (player &amp;&amp; card) {</span>
+<span class="cstat-no" title="statement not covered" >            player.hand.addCard(card); // Directly add the dealt card to the player's hand</span>
+<span class="cstat-no" title="statement not covered" >            console.log(`Player ${playerId} hits.`);</span>
+<span class="cstat-no" title="statement not covered" >            // Recalculate player's score or handle game state updates as needed here</span>
+<span class="cstat-no" title="statement not covered" >        } else {</span>
+<span class="cstat-no" title="statement not covered" >            console.error(`Player ${playerId} not found in the game state or failed to deal a card.`);</span>
+<span class="cstat-no" title="statement not covered" >        }</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >    static stand(gameState: GameState, playerId: string) {</span>
-<span class="cstat-no" title="statement not covered" >        // Logic for handling the "stand" action</span>
-<span class="cstat-no" title="statement not covered" >        // Additional logic if necessary</span>
+    static stand(gameState: GameState, playerId: string) {
+        // Logic for handling the "stand" action
+        const player = gameState.players.get(playerId); // Adjusted for Map access
+        
+        if (player) {
+            console.log(`Player ${playerId} stands.`);
+            // Perform any necessary actions when a player stands, e.g., change turn
+        } else {
+            console.error(`Player ${playerId} not found in the game state.`);
+        }
     }
 &nbsp;
     // Other player actions can be defined here...
@@ -154,7 +169,7 @@ export class PlayerActionHandler<span class="fstat-no" title="function not cover
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-02T22:58:51.257Z
+                at 2024-04-03T21:03:46.470Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

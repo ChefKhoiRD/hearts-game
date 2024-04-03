@@ -1,5 +1,5 @@
 import {Room, Client} from 'colyseus';
-import {TPlayerOptions} from '../entities/Player';
+import {TPlayerOptions} from '../entities/schemas/Player';
 import {State, IState} from '../entities/LobbyState';
 
 export class StateHandlerRoom extends Room<State> {

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.3% </span>
+                <span class="strong">88.88% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/23</span>
+                <span class='fraction'>16/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">45.45% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>15/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>12/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.3% </span>
+                <span class="strong">88.88% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>21/23</span>
+                <span class='fraction'>16/18</span>
             </div>
         
             
@@ -81,13 +81,7 @@
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a>
-<a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -97,21 +91,16 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">105x</span>
-<span class="cline-any cline-yes">105x</span>
-<span class="cline-any cline-yes">105x</span>
-<span class="cline-any cline-yes">105x</span>
-<span class="cline-any cline-yes">105x</span>
-<span class="cline-any cline-yes">105x</span>
-<span class="cline-any cline-yes">105x</span>
-<span class="cline-any cline-yes">105x</span>
-<span class="cline-any cline-yes">105x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">572x</span>
+<span class="cline-any cline-yes">572x</span>
+<span class="cline-any cline-yes">572x</span>
+<span class="cline-any cline-yes">572x</span>
+<span class="cline-any cline-yes">572x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Schema, type, filter } from '@colyseus/schema';
-import { CardValue } from './CardValue';
-import { getRandomArrayItem, availableSuits, availableValues } from './availableValues';
+import { CardValue, Suit, CardValueEnum } from './CardValue';<span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ><span class="branch-0 cbranch-no" title="branch not covered" > /</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>/ Adjust import to include Suit and CardValueEnum
 &nbsp;
 export class Card extends Schema {
     @type('boolean') visible: boolean;
@@ -119,17 +108,13 @@ export class Card extends Schema {
     @filter(function (this: Card) {
 <span class="cstat-no" title="statement not covered" >      return this.visible;</span>
 <span class="cstat-no" title="statement not covered" >    })</span>
-    @type(CardValue) value?: CardValue; // Make value optional
+    @type(CardValue) value?: CardValue; // Keep value optional based on your design, though it seems it should always be set based on the constructor
 &nbsp;
-    constructor(visible<span class="branch-0 cbranch-no" title="branch not covered" > = true)</span> {
+    constructor(suit: Suit, cardValue: CardValueEnum, visible: boolean<span class="branch-0 cbranch-no" title="branch not covered" > = true)</span> {
       super();
-&nbsp;
       this.visible = visible;
-&nbsp;
-      // Initialize value with default CardValue
-      this.value = new CardValue();
-      this.value.suit = getRandomArrayItem(availableSuits);
-      this.value.value = getRandomArrayItem(availableValues);
+      // Directly use the passed suit and cardValue to create a CardValue instance
+      this.value = new CardValue(suit, cardValue);
     }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -139,7 +124,7 @@ export class Card extends Schema {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-02T22:58:51.257Z
+                at 2024-04-03T21:03:46.470Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
