@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.42% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>39/57</span>
+                <span class='fraction'>57/57</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">83.33% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.42% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>39/57</span>
+                <span class='fraction'>57/57</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -148,32 +148,32 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">572x</span>
-<span class="cline-any cline-yes">572x</span>
-<span class="cline-any cline-yes">572x</span>
-<span class="cline-any cline-yes">572x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">104x</span>
+<span class="cline-any cline-yes">104x</span>
+<span class="cline-any cline-yes">104x</span>
+<span class="cline-any cline-yes">104x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -212,25 +212,25 @@ class CardValue extends Schema {
     this.value = value;
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  public get numericValue(): number {</span>
-<span class="cstat-no" title="statement not covered" >    const valueMap: { [key in CardValueEnum]?: number } = {</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Ace]: 11,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Two]: 2,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Three]: 3,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Four]: 4,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Five]: 5,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Six]: 6,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Seven]: 7,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Eight]: 8,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Nine]: 9,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Ten]: 10,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Jack]: 10,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.Queen]: 10,</span>
-<span class="cstat-no" title="statement not covered" >      [CardValueEnum.King]: 10,</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >    </span>
-<span class="cstat-no" title="statement not covered" >    return valueMap[this.value] || parseInt(this.value, 10);</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  public get numericValue(): number {
+    const valueMap: { [key in CardValueEnum]?: number } = {
+      [CardValueEnum.Ace]: 11,
+      [CardValueEnum.Two]: 2,
+      [CardValueEnum.Three]: 3,
+      [CardValueEnum.Four]: 4,
+      [CardValueEnum.Five]: 5,
+      [CardValueEnum.Six]: 6,
+      [CardValueEnum.Seven]: 7,
+      [CardValueEnum.Eight]: 8,
+      [CardValueEnum.Nine]: 9,
+      [CardValueEnum.Ten]: 10,
+      [CardValueEnum.Jack]: 10,
+      [CardValueEnum.Queen]: 10,
+      [CardValueEnum.King]: 10,
+    }
+    
+    return valueMap[this.value]<span class="branch-0 cbranch-no" title="branch not covered" > || parseInt(this.value, 10);</span>
+  }
 }
 &nbsp;
 export { CardValue };
@@ -241,7 +241,7 @@ export { CardValue };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-03T21:03:46.470Z
+                at 2024-04-05T05:15:27.465Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -1,6 +1,6 @@
 import {Room, Client} from 'colyseus';
-import {TPlayerOptions} from '../entities/schemas/Player';
-import {State, IState} from '../entities/LobbyState';
+import {TPlayerOptions} from '../schemas/Player';
+import {State, IState} from './LobbyState';
 
 export class StateHandlerRoom extends Room<State> {
   maxClients = 1000;

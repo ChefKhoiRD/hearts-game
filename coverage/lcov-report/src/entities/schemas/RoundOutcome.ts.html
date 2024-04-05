@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">9.8% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/48</span>
+                <span class='fraction'>5/51</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">9.8% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/48</span>
+                <span class='fraction'>5/51</span>
             </div>
         
             
@@ -111,18 +111,24 @@
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -161,60 +167,63 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Hand } from "./Hand";
 &nbsp;
-type roundOutcome = 'bust' | 'win' | 'lose' | 'draw' | '';
+type roundOutcome = 'bust' | 'win' | 'lose' | 'draw';
 &nbsp;
-/**
- * Given two hands and bet, calculates if player won/lost, and the amount they won
- * @param playerHand The player's hand
- * @param dealerHand The dealer's hand
- * @param bet The player's bet
- * @returns The outcome
- */
 export <span class="fstat-no" title="function not covered" >function computeRoundOutcome(</span>
 <span class="cstat-no" title="statement not covered" >    playerHand: Hand,</span>
 <span class="cstat-no" title="statement not covered" >    dealerHand: Hand,</span>
 <span class="cstat-no" title="statement not covered" >    bet: number</span>
-<span class="cstat-no" title="statement not covered" >  ): {</span>
+<span class="cstat-no" title="statement not covered" >): {</span>
 <span class="cstat-no" title="statement not covered" >    moneyChange: number;</span>
 <span class="cstat-no" title="statement not covered" >    outcome: roundOutcome;</span>
-<span class="cstat-no" title="statement not covered" >  } {</span>
-<span class="cstat-no" title="statement not covered" >    if (playerHand.isBlackjack &amp;&amp; !dealerHand.isBlackjack) {</span>
-<span class="cstat-no" title="statement not covered" >      // Player wins 3:2</span>
-<span class="cstat-no" title="statement not covered" >      return {</span>
-<span class="cstat-no" title="statement not covered" >        moneyChange: (5 / 2) * bet,</span>
-<span class="cstat-no" title="statement not covered" >        outcome: 'win',</span>
-<span class="cstat-no" title="statement not covered" >      };</span>
-<span class="cstat-no" title="statement not covered" >    } else if (</span>
-<span class="cstat-no" title="statement not covered" >      dealerHand.isBusted || //dealer busted, player wins</span>
-<span class="cstat-no" title="statement not covered" >      playerHand.score &gt; dealerHand.score // player has higher score than dealer, player wins</span>
-<span class="cstat-no" title="statement not covered" >    ) {</span>
-<span class="cstat-no" title="statement not covered" >      return {</span>
-<span class="cstat-no" title="statement not covered" >        moneyChange: 2 * bet,</span>
-<span class="cstat-no" title="statement not covered" >        outcome: 'win',</span>
-<span class="cstat-no" title="statement not covered" >      };</span>
-<span class="cstat-no" title="statement not covered" >    } else if (</span>
-<span class="cstat-no" title="statement not covered" >      playerHand.score == dealerHand.score &amp;&amp; //Score is the same</span>
-<span class="cstat-no" title="statement not covered" >      playerHand.isBlackjack == dealerHand.isBlackjack //And dealer does not have blackjack if player also doesn't have it</span>
-<span class="cstat-no" title="statement not covered" >    ) {</span>
-<span class="cstat-no" title="statement not covered" >      return {</span>
-<span class="cstat-no" title="statement not covered" >        moneyChange: bet,</span>
-<span class="cstat-no" title="statement not covered" >        outcome: 'draw',</span>
-<span class="cstat-no" title="statement not covered" >      };</span>
-<span class="cstat-no" title="statement not covered" >    } else {</span>
-<span class="cstat-no" title="statement not covered" >      return {</span>
-<span class="cstat-no" title="statement not covered" >        moneyChange: 0,</span>
-<span class="cstat-no" title="statement not covered" >        outcome: 'lose',</span>
-<span class="cstat-no" title="statement not covered" >      };</span>
+<span class="cstat-no" title="statement not covered" >} {</span>
+<span class="cstat-no" title="statement not covered" >    // Check if player busted, player loses regardless of dealer's hand</span>
+<span class="cstat-no" title="statement not covered" >    if (playerHand.isBusted) {</span>
+<span class="cstat-no" title="statement not covered" >        return {</span>
+<span class="cstat-no" title="statement not covered" >            moneyChange: -bet,</span>
+<span class="cstat-no" title="statement not covered" >            outcome: 'bust',</span>
+<span class="cstat-no" title="statement not covered" >        };</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-  </pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    // Player wins with a Blackjack and dealer does not have a Blackjack</span>
+<span class="cstat-no" title="statement not covered" >    if (playerHand.isBlackjack &amp;&amp; !dealerHand.isBlackjack) {</span>
+<span class="cstat-no" title="statement not covered" >        return {</span>
+<span class="cstat-no" title="statement not covered" >            moneyChange: bet * 1.5, // Payout at 3:2 rate for Blackjack</span>
+<span class="cstat-no" title="statement not covered" >            outcome: 'win',</span>
+<span class="cstat-no" title="statement not covered" >        };</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    // Dealer busts or player has higher score (and not busted), player wins</span>
+<span class="cstat-no" title="statement not covered" >    if (dealerHand.isBusted || (playerHand.score &gt; dealerHand.score)) {</span>
+<span class="cstat-no" title="statement not covered" >        return {</span>
+<span class="cstat-no" title="statement not covered" >            moneyChange: bet, // Straight win, player wins their bet back plus the same amount</span>
+<span class="cstat-no" title="statement not covered" >            outcome: 'win',</span>
+<span class="cstat-no" title="statement not covered" >        };</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    // Draw conditions - scores are equal and both have/don't have blackjack</span>
+<span class="cstat-no" title="statement not covered" >    if (playerHand.score === dealerHand.score &amp;&amp; </span>
+<span class="cstat-no" title="statement not covered" >        playerHand.isBlackjack === dealerHand.isBlackjack) {</span>
+<span class="cstat-no" title="statement not covered" >        return {</span>
+<span class="cstat-no" title="statement not covered" >            moneyChange: 0, // Bet returned to player</span>
+<span class="cstat-no" title="statement not covered" >            outcome: 'draw',</span>
+<span class="cstat-no" title="statement not covered" >        };</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    // If none of the above conditions are met, the player loses</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+<span class="cstat-no" title="statement not covered" >        moneyChange: -bet, // Player loses their bet</span>
+<span class="cstat-no" title="statement not covered" >        outcome: 'lose',</span>
+<span class="cstat-no" title="statement not covered" >    };</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-03T21:03:46.470Z
+                at 2024-04-05T05:15:27.465Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
