@@ -1,7 +1,7 @@
 import type {AsyncReturnType} from 'type-fest';
 import {discordSdk} from './discordSdk';
 import {Client, Room} from 'colyseus.js';
-import {State} from '../../server/src/entities/State';
+import {State} from '../../server/src/entities/templateItems/LobbyState';
 
 export type TAuthenticateResponse = AsyncReturnType<typeof discordSdk.commands.authenticate>;
 export interface IColyseus {

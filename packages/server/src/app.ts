@@ -5,6 +5,7 @@ import path from 'path';
 import fetch from 'cross-fetch';
 import { setupColyseusServer } from './setupColyseusServer'; // Ensure the path is correct
 import { monitor } from '@colyseus/monitor';
+import { matchMaker } from 'colyseus';  // Import matchMaker directly
 
 dotenv.config({ path: '../../.env' });
 
@@ -52,9 +53,28 @@ app.post('/token', async (req: Request, res: Response) => {
     res.send({ access_token: json.access_token });
 });
 
+// Endpoint to fetch room details for debugging purposes
+app.get('/blackjack/room/:roomId', async (req: Request, res: Response) => {
+    try {
+        const rooms = await matchMaker.query({ roomId: req.params.roomId });
+        if (rooms.length > 0) {
+            const room = rooms[0];
+            res.send({
+                roomId: room.roomId,
+                clients: room.clients,
+                maxClients: room.maxClients
+            });
+        } else {
+            res.status(404).send({ error: 'Room not found' });
+        }
+    } catch (error) {
+        res.status(500).send({ error: 'Error querying room: ' + error.message });
+    }
+});
+
 // Adjusting the route prefix based on NODE_ENV to simplify proxy configuration in development
 const apiPrefix = process.env.NODE_ENV === 'production' ? '/api' : '/';
-app.use(apiPrefix, (req, res) => {
+app.use(apiPrefix, (req, res, next) => {
     res.status(404).send('API route not found');
 });
 

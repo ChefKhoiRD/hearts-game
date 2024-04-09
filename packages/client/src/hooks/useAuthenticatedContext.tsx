@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Client, Room} from 'colyseus.js';
 
-import { State } from '../../../server/src/entities/State';
+import { State } from '../../../server/src/entities/templateItems/LobbyState';
 import {GAME_NAME} from '../../../server/src/shared/Constants';
 
 import {discordSdk} from '../discordSdk';

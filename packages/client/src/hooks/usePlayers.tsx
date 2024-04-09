@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Events} from '@discord/embedded-app-sdk';
-import {Player as PlayerState} from '../../../server/src/entities/Player';
+import { Player as PlayerState } from '../../../server/src/entities/schemas/Player';
 
 import {useAuthenticatedContext} from '../hooks/useAuthenticatedContext';
 import {discordSdk} from '../discordSdk';

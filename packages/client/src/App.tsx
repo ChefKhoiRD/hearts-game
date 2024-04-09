@@ -1,14 +1,10 @@
 import * as React from 'react';
-import {AuthenticatedContextProvider} from './hooks/useAuthenticatedContext';
-import {PlayersContextProvider} from './hooks/usePlayers';
+import Lobby from './scenes/lobby';
+import Game from './scenes/game';
 
-import {VoiceChannelActivity} from './components/VoiceChannelActivity';
 export default function App() {
   return (
-    <AuthenticatedContextProvider>
-      <PlayersContextProvider>
-        <VoiceChannelActivity />
-      </PlayersContextProvider>
-    </AuthenticatedContextProvider>
+    // <Lobby />
+    <Game />
   );
 }

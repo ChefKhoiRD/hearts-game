@@ -6,12 +6,10 @@ export class PlayerActionHandler {
     static hit(gameState: GameState, playerId: string) {
         // Logic for handling the "hit" action
         const player = gameState.players.get(playerId); // Assuming players is a Map
-        const card = gameState.dealCard(); // Adjusted to match the new dealCard method signature
+        const card = gameState.dealCard(false); // Adjusted to match the new dealCard method signature
         
         if (player && card) {
             player.hand.addCard(card); // Directly add the dealt card to the player's hand
-            console.log(`Player ${playerId} hits.`);
-            // Recalculate player's score or handle game state updates as needed here
         } else {
             console.error(`Player ${playerId} not found in the game state or failed to deal a card.`);
         }

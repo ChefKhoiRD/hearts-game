@@ -51,19 +51,19 @@ export class GameState extends Schema {
     }
   }
 
-  // Assuming TPlayerOptions should include sessionId based on your error message.
-  addPlayer(player: Player): void {
-    console.log("Adding player:", player);
-    // Directly pass the existing player properties as TPlayerOptions
-    // Including sessionId in TPlayerOptions as required
-    const playerOptions: TPlayerOptions = { 
-      sessionId: player.sessionId, // Ensure sessionId is included
-      userId: player.userId, 
-      name: player.name, 
-      avatarUri: player.avatarUri 
-    };
-    this.createPlayer(player.sessionId, playerOptions);
-  }
+  // // Assuming TPlayerOptions should include sessionId based on your error message.
+  // addPlayer(player: Player): void {
+  //   console.log("Adding player:", player);
+  //   // Directly pass the existing player properties as TPlayerOptions
+  //   // Including sessionId in TPlayerOptions as required
+  //   const playerOptions: TPlayerOptions = { 
+  //     sessionId: player.sessionId, // Ensure sessionId is included
+  //     userId: player.userId, 
+  //     name: player.name, 
+  //     avatarUri: player.avatarUri 
+  //   };
+  //   this.createPlayer(player.sessionId, playerOptions);
+  // }
 
   determineCurrentTurnPlayer(): Player | undefined {
     if (this.players.size === 0) {
@@ -80,21 +80,38 @@ export class GameState extends Schema {
       console.error(`Player with ID ${playerId} not found.`);
       return;
     }
-
+  
+    // Prevent the player from taking further actions if they have stood
+    if (player.hasStood) {
+      console.error(`Player ${playerId} has already stood and cannot take further actions.`);
+      return;
+    }
+  
     switch (action) {
       case 'hit':
+        // Player decides to take another card
+        if (!player.hand) player.hand = new Hand();
         const card = this.dealCard(true);
         if (card) {
           player.hand.addCard(card);
         }
         break;
       case 'stand':
-        // Logic for stand action, potentially ending the player's turn
+        // Player decides to stand, marking them as having stood
+        player.hasStood = true;
+        console.log(`Player ${playerId} stands.`);
+        // Further logic to handle end of turn or game state changes
         break;
       default:
         console.error(`Invalid action: ${action}`);
         break;
     }
+  }
+  
+  // Additional helper method to handle end of player's turn
+  endPlayerTurn(playerId: string): void {
+    console.log(`Ending turn for Player ${playerId}.`);
+    // Implement logic to check if all players have finished their actions and move to next phase
   }
 
   determineRoundOutcome(): void {
